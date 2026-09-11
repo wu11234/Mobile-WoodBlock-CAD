@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">木块3D实时建模</string>
+    <string name="status_scanning">正在扫描桌面与木块...</string>
+    <string name="status_tracking">已锁定木块！正在实时生成3D模型</string>
+    <string name="mode_ar">AR实景贴合</string>
+    <string name="mode_3d">3D自由查看</string>
+    <string name="export_obj">导出3D模型 (OBJ)</string>
+    <string name="manage_photos">管理各面照片</string>
+    <string name="cube_size">木块边长: %1$.1f cm</string>
+</resources>

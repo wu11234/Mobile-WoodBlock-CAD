@@ -1,0 +1,8 @@
+path: dataset/yolo
+train: images/train
+val: images/val
+
+names:
+  0: wood_block
+  1: hole
+  2: groove

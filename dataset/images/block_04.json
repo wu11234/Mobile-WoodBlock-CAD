@@ -1,0 +1,36 @@
+{
+  "version": "7.4.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "wood_block",
+      "points": [
+        [
+          77.73088685015307,
+          305.57798165137626
+        ],
+        [
+          548.678899082569,
+          195.48623853211012
+        ],
+        [
+          717.4862385321102,
+          654.2018348623852
+        ],
+        [
+          202.50152905198797,
+          814.4464831804283
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "shape_type": "polygon",
+      "flags": {},
+      "mask": null
+    }
+  ],
+  "imagePath": "block_04.jpg",
+  "imageData": null,
+  "imageHeight": 1024,
+  "imageWidth": 768
+}

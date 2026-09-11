@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- 1. 真实摄像头全屏取景预览 -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraPreviewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 2. 实时视觉标记层 (绿框、缺角、孔洞准星) -->
+    <com.woodblock.ar.ui.VisionOverlayView
+        android:id="@+id/visionOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 3. 顶部实时状态指示条 (支持一键最小化折叠) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardTopStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/card_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- 顶部常驻标题行 (点击或点击右侧按钮可一键切换最小化) -->
+            <LinearLayout
+                android:id="@+id/layoutTopHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:id="@+id/viewLiveDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_badge"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvStateTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3D 实体模型重构"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvFps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60 FPS"
+                    android:textColor="@color/accent_green"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- 最小化 / 展开按钮 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleMinimize"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:minWidth="0dp"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="0dp"
+                    android:text="收起 ▲"
+                    android:textColor="#90A4AE"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- 可折叠详细内容区域 (最小化时隐藏) -->
+            <LinearLayout
+                android:id="@+id/layoutTopCollapsible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvVisionStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="将摄像头对准木块，点击【开始】生成 3D 模型"
+                    android:textColor="#B0BEC5"
+                    android:textSize="12sp" />
+
+                <ProgressBar
+                    android:id="@+id/scanProgressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/accent_green"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 4. 画中画实时生成的 3D 模型预览窗 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card3dWindow"
+        android:layout_width="160dp"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="#E61A1C23"
+        app:strokeColor="@color/wood_brown"
+        app:strokeWidth="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cardBottomControls">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.opengl.GLSurfaceView
+                android:id="@+id/surfaceView3D"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tvBadge3D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="6dp"
+                android:background="#AA000000"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="3D 预览"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 5. 底部控制栏：【开始】【暂停】【结束】与【模型】 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBottomControls"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/card_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp">
+
+            <!-- 开始按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStart"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:paddingHorizontal="0dp"
+                android:text="开始"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/accent_green"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <!-- 暂停按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPause"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="4dp"
+                android:paddingHorizontal="0dp"
+                android:text="暂停"
+                android:textColor="@color/white"
+                app:strokeColor="#FFA000"
+                android:textSize="13sp"
+                android:enabled="false" />
+
+            <!-- 结束按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFinish"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="4dp"
+                android:paddingHorizontal="0dp"
+                android:text="结束"
+                android:textColor="@color/white"
+                app:strokeColor="#FF5252"
+                android:textSize="13sp"
+                android:enabled="false" />
+
+            <!-- 模型库按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnModels"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:paddingHorizontal="0dp"
+                android:text="模型"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/wood_brown"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

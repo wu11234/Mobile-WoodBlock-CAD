@@ -1,0 +1,61 @@
+﻿# Android build outputs and intermediate files
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Gradle caches and build directories
+.gradle/
+build/
+app/build/
+*/build/
+*/*/build/
+
+# Local Android SDK configuration (contains machine-specific paths)
+local.properties
+local.properties*
+
+# Android Studio / IntelliJ / VS Code IDE files
+.idea/
+*.iml
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# OS-specific and temporary files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+~$*
+*.tmp
+*.bak
+*.swp
+*~
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Office documents and temporary locks (prevent author metadata leaks)
+~$*.docx
+*.docx
+*.pdf
+
+# Signing keys and certificates
+*.jks
+*.keystore
+*.key
+*.pem
+*.token
+*.cache
