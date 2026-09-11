@@ -1,4 +1,4 @@
-﻿# Mobile-WoodBlock-CAD: Real-Time 60 FPS Monocular 3D CAD Solid Reconstruction on Android
+# Mobile-WoodBlock-CAD: Real-Time 60 FPS Monocular 3D CAD Solid Reconstruction on Android
 
 [![Platform: Android](https://img.shields.io/badge/Platform-Android%208.0%2B%20(API%2026%2B)-3DDC84.svg?logo=android&logoColor=white)](https://developer.android.com)
 [![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin%201.9-7F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org)
@@ -10,8 +10,6 @@
 An intelligent, production-ready Android application capable of **real-time 60 FPS monocular 3D CAD solid reconstruction** of geometric wooden blocks directly from smartphone camera video streams. 
 
 Unlike traditional multi-view photogrammetry (SfM/MVS) or compute-heavy neural implicit representations (NeRF/Gaussian Splatting), this system couples **lightweight deep neural feature detection (YOLOv8 Nano)** with **closed-form differential manifold shape priors**, generating **100% watertight, zero-noise, industrial-grade CAD solid models (OBJ/STL)** in real time on edge mobile devices.
-
-> **Language Notice**: Detailed Chinese technical whitepaper and user manuals are available in [`docs/README_CN.md`](docs/README_CN.md) and [`docs/USER_MANUAL_CN.md`](docs/USER_MANUAL_CN.md).
 
 ---
 
@@ -138,10 +136,6 @@ Mobile-WoodBlock-CAD/
 ├── runs/                      # YOLOv8 training runs & evaluation metrics
 │   ├── woodblock_v8n/         # Baseline Nano model weights & metrics
 │   └── woodblock_v8n_method_a/# Augmented training outputs (confusion matrix, best.onnx, mAP curves)
-├── docs/                      # Technical documentation & manuals
-│   ├── README_CN.md           # Comprehensive Chinese technical whitepaper
-│   ├── USER_MANUAL_CN.md      # Step-by-step user manual
-│   └── tech_doc.html          # Interactive 3D web whitepaper with Three.js viewer
 ├── model.stl                  # High-precision reverse-engineered CAD ground truth (24MB, 499k faces)
 ├── yolov8n.pt                 # Ultralytics official YOLOv8 Nano base weights
 ├── launch_annotation.bat      # Script to launch Labelme annotation environment
